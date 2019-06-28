@@ -66,7 +66,7 @@ const byte row7 = P5_1;
 
 const int col = 20;
 const int row = 4;
-char buf[row][col];
+char buf[row][col+1];
 short int pos = 0;
 
 char oldchr = 0;
@@ -74,14 +74,24 @@ byte shiftlock = 0; // set/unset by pressing shift and letting it go rather than
 byte shiftlockchanged = 0; // helper
 unsigned long t = 0; // keypad repetition interval //formally, 'time'
 byte displaychanged = 1;
-byte curline = 0;
+byte curline = 1;
+
+void init_ui()
+{
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  //optional
+  //this text serves to test printing to a display with text already present (ex: UI)
+  lcd.print("Received: ");
+}
 
 //prints buf
 void draw_page()
 {
-  //lcd.clear();
-  for(int i = 0; i < row; i++)
-  {
+  lcd.clear();
+  init_ui();
+  for(int i = 1; i < row; i++)
+  { 
     lcd.setCursor(0, i);
     lcd.print(buf[i]);
   }
@@ -134,7 +144,6 @@ void setup() {
   // set up the LCD's number of columns and rows: 
   lcd.begin(col, row);
   // Print a message to the LCD.
-  //lcd.print("hello, world!");
 
   initialize_kb();
 
@@ -234,7 +243,7 @@ initialize_kb();
   if (chr != oldchr)
     if (chr==8)    // Deal with backspace  
     {
-      if ((pos > 0) || (curline > 0)) // don't underflow our buffer
+      if ((pos > 0) || (curline > 1)) // don't underflow our buffer
       {
           if (pos==0) {pos=col-1; curline--;}
           buf[curline][--pos] = 0;
@@ -280,7 +289,7 @@ initialize_kb();
   
   // however, allow repeat if there has been no change in keypress in 200ms by clearing old character
   
-  if ((millis()-t)>200)
+  if ((millis()-t)>400)
   {
     oldchr = 0;
     t = millis();
