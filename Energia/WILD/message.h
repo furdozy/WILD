@@ -1,15 +1,26 @@
-#include "node.h"
 #include "Energia.h"
-//Function to send a message. To send a broadcast message, call with dest=0xffff. 
-int send(String msg,int dest){
-  
-  //open serial communication
-//  Serial.begin(9600);
-  
-  //enter command mode
-//  Serial.write("+++");
-//  delay 50;//delay to ensure the commands are reccognized
+# include "node.h"
 
-//  String setDest="AT 
-//Serial.write(
+
+int send(String msg,struct node dest){
+  
+  //string for hi 32 bits of address
+  String dHi="AT DH "+dest.SH;
+
+  //string for low 32 bits of address
+  String dLow="AT DL "+dest.SL;
+
+  //open the serial connection
+  Serial.begin(9600);
+
+  //send the address commands and exit command mode
+  Serial.print("+++");
+  delay(50);//wait for AT mode
+  Serial.print(dHi);
+  Serial.print(dLow);
+  Serial.print("AT CN");//exit AT mode
+
+  Serial.print(msg);
+
+  return 1;//return statement for reading status if needed at a future date
 }
