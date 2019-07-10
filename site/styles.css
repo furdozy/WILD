@@ -1,0 +1,153 @@
+@charset "utf-8";
+@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+
+
+body {
+  /* font-family: 'Poppins', sans-serif; */
+  font-size: 20px;
+  text-align: center;
+  font-family: 'Work Sans', sans-serif;
+  /* font-family: 'Source Sans Pro', sans-serif; */
+
+}
+
+p {
+    margin: 0 auto;
+  width: 80vw;
+}
+
+
+h2 {
+  text-align: center;
+  /* font-family: 'Poppins', sans-serif; */
+  font-size: 20px;
+  font-family: 'Work Sans', sans-serif;
+/* font-family: 'Yatra One', cursive; */
+}
+
+h2 a {
+  color: black;
+  padding-left: 3vw;
+  padding-right: 3vw;
+  text-decoration: none;
+}
+
+h2 a:hover {
+  color: #9AE4DE;
+}
+
+
+.banner {
+  height: 50px;
+  text-align: center;
+  border: none;
+  padding: 2%;
+  /* font-family: 'Poppins', sans-serif; */
+  font-size: 50px;
+  color: white;
+  text-shadow: 2px 2px 6px black;
+  padding-bottom: 50px;
+  /* font-family: 'Yatra One', cursive; */
+  font-family: 'Work Sans', sans-serif;
+  /* font-family: 'Source Sans Pro', sans-serif; */
+
+
+	background-image: url(../images/banner.png);
+  background-size: cover;
+  background-position: center;
+}
+
+.homecard {
+  height: 50vh;
+	background-size: cover;
+  background-position: center;
+
+	display:flex;
+	align-items: center;
+	justify-content: center;
+
+	background-image: url(../images/homeimg.png);
+	background-color: #222222;
+	background-repeat: no-repeat;
+
+  opacity: 0.8;
+}
+
+
+.hometext {
+  text-align: center;
+	max-width: 1200px;
+
+	color: white;
+	text-shadow: 2px 2px 6px black;
+  /* font-family: 'Poppins', sans-serif; */
+	font-size: 60px;
+/* font-family: 'Work Sans', sans-serif; */
+  font-family: 'Source Sans Pro', sans-serif;
+  /* font-family: 'Yatra One', cursive; */
+}
+
+.linkcard {
+  text-decoration: none;
+  cursor: pointer;
+  font-size:20px;
+  text-align:center;
+  height: 45px;
+  width: 450px;
+  color: #505050;
+  padding-top: 18px;
+  background-color: #D2EAE8;
+  margin: 0 auto;
+  margin-bottom: 10px;
+  /* background-image: url(../images/wild-sea1.png); */
+  background-size: auto;
+  background-position: center;
+
+  border-radius: 35px;
+
+/* font-family: 'Work Sans', sans-serif; */
+  font-family: 'Source Sans Pro', sans-serif;
+  /* font-family: 'Yatra One', cursive; */
+}
+
+.linkcard:hover {
+  color: white;
+}
+
+
+
+.card {
+  margin: 20px;
+  padding-top: 60px;
+  width: 300px;
+  height: 150px;
+  background-color: #D2EAE8;
+  color: #505050;
+  display: inline-block;
+  border-radius: 5px;
+  vertical-align: top;
+  overflow: hidden;
+  font-family: 'Exo 2', sans-serif;
+  color: #656565;
+}
+
+.nameline {
+  /* font-family: 'Poppins', sans-serif; */
+/* font-family: 'Work Sans', sans-serif; */
+/* font-family: 'Yatra One', cursive; */
+font-family: 'Oswald', sans-serif;
+  font-size: 30px;
+
+  color: #3D4B54;
+  /* text-shadow: 2px 2px 2px #9FB0AE; */
+}
+
+
+/* misc */
+.spacer {
+  padding-top: 50px;
+}
+
+.footer-card {
+
+}
