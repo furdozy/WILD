@@ -238,55 +238,6 @@ void read_keyboard()
 
 }
 
-
-//void init_ui()
-//{
-//  //currently, 1st line used
-//  lcd.clear();
-//  lcd.setCursor(0, 0);
-//  //optional
-//  //this text serves to test printing to a display with text already present (ex: UI)
-//  lcd.print("Message Draft:");
-//}
-//
-//void send_page()
-//{
-//  enter = 0;
-//  lcd.clear();
-//  //sent to screen on enter
-//  lcd.setCursor(0, 0);
-//  lcd.print("Send Message?");
-//  //print message in buffer
-//  for(int i = 1; i < row; i++)
-//  { 
-//    lcd.setCursor(0, i);
-//    lcd.print(buf[i]);
-//  }
-//
-//  while(enter==0) {}
-//
-//  //will reach once enter key pressed
-//  done = 1;
-//
-//}
-//
-////prints buf
-//void draw_page()
-//{
-//  lcd.clear();
-//  init_ui();
-//  for(int i = 1; i < row; i++)
-//  { 
-//    lcd.setCursor(0, i);
-//    lcd.print(buf[i]);
-//  }
-//}
-//
-//void draw() 
-//{
-//  draw_page();
-//}
-
 void initialize_kb()
 {
   digitalWrite(col1, LOW); // turn off pullup
