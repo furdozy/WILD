@@ -1,6 +1,21 @@
 #include "Energia.h"
-# include "node.h"
+#include "node.h"
+#include <string.h>
 
+#define node bCast {
+  char NI[20]="broadcast";
+  0x00,
+  0xffff};
+
+
+
+
+
+int findNodes(){
+  
+  
+  
+}
 
 int send(String msg,struct node dest){
   

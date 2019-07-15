@@ -1,5 +1,5 @@
 struct node{
-  char *NI;
+  char NI[20];
   int SL;
   int SH;
 };
