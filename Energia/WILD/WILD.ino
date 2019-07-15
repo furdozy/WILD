@@ -3,12 +3,13 @@
 #include <LiquidCrystal.h>
 #include "custChars.h"
 #include "network.h"
+#include "pages.h"
 // initialize the library with the numbers of the interface pins
 LiquidCrystal lcd(P6_7, P2_3, P2_6, P2_4, P5_6, P6_6);
 int row=0;
 int col=0;
 void setup() {
-
+//init the lcd and display welcome screen----------------
   node connected[20];
   
   Serial.begin(9600);
@@ -42,6 +43,20 @@ void setup() {
 
   delay(5000);
   lcd.clear();
+
+//init menus-----------------------
+
+//main menu
+char *menu[4]={VIEW,SEND,OPT,SOS};
+
+//options menu
+char *options[2]={ADD,INFO};
+
+
+
+//display top menu option
+lcd.setCursor(0,0);
+lcd.print(menu[0]):
 }
 
 void loop() {
