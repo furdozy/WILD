@@ -8,6 +8,7 @@
 LiquidCrystal lcd(P6_7, P2_3, P2_6, P2_4, P5_6, P6_6);
 int row=0;
 int col=0;
+char *menu[4]={VIEW,SEND,OPT,SOS};
 void setup() {
 //init the lcd and display welcome screen----------------
   node connected[20];
@@ -47,19 +48,22 @@ void setup() {
 //init menus-----------------------
 
 //main menu
-char *menu[4]={VIEW,SEND,OPT,SOS};
+
 
 //options menu
-char *options[2]={ADD,INFO};
+//char *options[2]={ADD,INFO};
 
 
 
 //display top menu option
+lcd.clear();
 lcd.setCursor(0,0);
-lcd.print(menu[0]):
+lcd.print(menu[0]);
 }
 
 void loop() {
+  lcd.setCursor(0,0);
+  lcd.print(menu[0]);
    if (Serial.available()) {
     lcd.write("~");
     byte data=Serial.read();
