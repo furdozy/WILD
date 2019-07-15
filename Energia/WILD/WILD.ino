@@ -8,7 +8,7 @@
 LiquidCrystal lcd(P6_7, P2_3, P2_6, P2_4, P5_6, P6_6);
 int row=0;
 int col=0;
-char *menu[4]={VIEW,SEND,OPT,SOS};
+String menu[4]={VIEW,SEND,OPT,SOS};
 void setup() {
 //init the lcd and display welcome screen----------------
   node connected[20];
