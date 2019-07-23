@@ -1,5 +1,6 @@
 // include the library code:
 #include <LiquidCrystal.h>
+#include <string.h>
 
 
 // initialize the library with the numbers of the interface pins
@@ -21,87 +22,109 @@ const byte row6 = P3_5;
 const byte row7 = P5_1;
 
 
-const int col = 20;
-const int row = 4;
-char buf[row][col+1];
-byte enter = 0; //registers if enter key pressed
+
 
 
 void setup() {
   
-  // set up the LCD's number of columns and rows: 
-  lcd.begin(col, row);
 
-  read_keyboard();
-
-  check_message();
-
-  send_message();
+  read_keyboard(5); //max message size of 5
+//
+//  check_message();
+//
+//  send_message();
   
 }
 
 void loop() {}
 
-void check_message()
-{
-  lcd.clear();
-  lcd.setCursor(0, 0);
-  lcd.print("Send Message?");
-  
-  //print message in buffer
-  for(int i = 1; i < row; i++)
-  { 
-    lcd.setCursor(0, i);
-    lcd.print(buf[i]);
-  }
+//void check_message()
+//{
+//  lcd.clear();
+//  lcd.setCursor(0, 0);
+//  lcd.print("Send Message?");
+//  
+//  //print message in buffer
+//  for(int i = 1; i < row; i++)
+//  { 
+//    lcd.setCursor(0, i);
+//    lcd.print(buf[i]);
+//  }
+//
+//  //check for enter
+//   initialize_kb();
+//  pinMode(col4, OUTPUT); 
+//  digitalWrite(col4, LOW);
+//  while(!enter)
+//  { 
+//    //waiting for user to  select enter
+//   if (digitalRead(row4)==0) {enter = 1;}
+//  }
+//}
+//
+//void send_message()
+//{
+//    lcd.clear();
+//  lcd.setCursor(0, 0);
+//  lcd.print("Sent Message!");
+//  for(int i = 1; i < row; i++)
+//  { 
+//    lcd.setCursor(0, i);
+//    lcd.print(buf[i]);
+//  }
+//}
 
-  //check for enter
-   initialize_kb();
-  pinMode(col4, OUTPUT); 
-  digitalWrite(col4, LOW);
-  while(!enter)
-  { 
-    //waiting for user to  select enter
-   if (digitalRead(row4)==0) {enter = 1;}
-  }
-}
 
-void send_message()
-{
-    lcd.clear();
-  lcd.setCursor(0, 0);
-  lcd.print("Sent Message!");
-  for(int i = 1; i < row; i++)
-  { 
-    lcd.setCursor(0, i);
-    lcd.print(buf[i]);
-  }
-}
 
-void read_keyboard()
+
+
+
+char *read_keyboard(int maxSize)
 {
+  lcd.begin(20, 4);
+  char *buf;
+  buf = (char*)malloc(sizeof(char)*maxSize);
+  byte enter = 0;
+  int full = 0;
   short int pos = 0;
   char oldchr = 0;
   byte shiftlock = 0; // set/unset by pressing shift and letting it go rather than using it as a modifier for another key
   byte shiftlockchanged = 0; // helper
   unsigned long t = 0; // keypad repetition interval //formally, 'time'
-  byte curline = 1; //FOR STARTING MESSAGE ON SECOND LINE
+  byte curline = 0; //FOR STARTING MESSAGE ON SECOND LINE
+  int changedisplay = 0;
+  int rowpos = 0;
+  int colpos = 0;
 
   //init buf
-  for(int i = 0; i < row; i++)
+  for(int i = 0; i < maxSize; i++)
   {
-    buf[i][0] = 0;
+    buf[i] = 0;
   }
   
   initialize_kb();
   
   while(1)
   {
-      //stop reading once 'enter' pressed
-      if(enter)
+    if(changedisplay == 1)
+    {
+      for(int i = 0; i < maxSize; i++)
+      { 
+        rowpos = (int)i/20;
+        lcd.setCursor(colpos, rowpos);
+        lcd.print(buf[i]);
+        colpos++;
+        if(colpos == 20)
+          colpos = 0;
+      }
+      changedisplay = 0;
+    }
+
+      //stop reading once 'enter' or Center cursor key pressed
+      if( enter || (dir == 4))
       {
-        enter = 0;
-        break;
+//        enter = 0;
+        return buf;
       }
    
     
@@ -185,32 +208,40 @@ void read_keyboard()
       if (chr != oldchr)
         if (chr==8)    // Deal with backspace  
         {
-          if ((pos > 0) || (curline > 1)) // don't underflow our buffer
+          if (pos > 0) // don't underflow our buffer
           {
-              if (pos==0) {pos=col-1; curline--;}
-              buf[curline][--pos] = 0;
+//              if (pos==0) 
+//              {
+//                pos=col-1; 
+//                curline--;
+//              }
+              buf[--pos] = 0;
               t = millis();
+              changedisplay = 1;
               
           }
         }
-        else if (chr !=0)
+        else if ((full == 0) && (chr !=0))
         {
-          if (curline < row) // don't overflow our buffer      
-          {
+
             if (sym==1) // if the symbol key is pressed, put it in the buff as a symbol
-              buf[curline][pos] = symb;
+              buf[pos] = symb;
             // enter raw/upper case character if shift is selected or it is not a shiftable character
             else if (shift==1 || shiftlock==1 || chr=='$' || chr==' ' || chr=='~' || chr == 13)
-              buf[curline][pos] = chr;
+              buf[pos] = chr;
             // otherwise enter as a lower case character
             else
-              buf[curline][pos] = (chr+32);    
+              buf[pos] = (chr+32);    
               
             // advance end of buffer
-            buf[curline][++pos] = 0;
-            if (pos>col-1) {curline++; pos=0;}
+            buf[++pos] = 0;
+            if (pos == MaxSize) 
+            {
+              full = 1;
+            }
             t = millis();
-          }
+            changedisplay = 1;
+          
         }
       
       // Pressing both shift keys together is taken as a shift lock operation
