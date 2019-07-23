@@ -113,3 +113,9 @@ void doActions(int row,int col){
     doSend();
   }
 }
+String getText(int maxSize){
+  //clear screen
+  //while enter not pressed
+  // -print chars by buttons
+  //return all chars as string 
+}
