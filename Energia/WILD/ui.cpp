@@ -3,6 +3,7 @@
 #include "custChars.h"
 #include <LiquidCrystal.h>
 #include "ui.hpp"
+#include "actions.h"
 
 
 LiquidCrystal lcd(P6_4, P6_2, P2_3, P2_4, P2_5, P2_6);
@@ -109,6 +110,6 @@ void updateUI(int dir){
 }
 void doActions(int row,int col){
   if(row==0&&col==1){
-    
+    doSend();
   }
 }
