@@ -1,3 +1,9 @@
+//Description:
+// This program prints 4 lines to the LCD from memory on startup, 
+// then takes in keyboard input until the enter key is pressed. 
+// After, the program writes the input text to memory. 
+// Disconnect power and plug back in to display the values sav
+
 // include the library code:
 #include <LiquidCrystal.h>
 #include <driverlib.h>
