@@ -6,8 +6,22 @@
 
 
 LiquidCrystal lcd(P6_4, P6_2, P2_3, P2_4, P2_5, P2_6);
-int row=0;
-int col=0;
+int row=0;//menu expressed as a row
+int col=0;//item as col
+
+int menuSize[2]={4,3};
+String dne=dne;
+//define menus
+
+//
+String menus[2][4]={{VIEW,SEND,OPT,SOS} 
+                    ,{ADD,INFO,EXIT,}    };
+int menuArray[2][4]={{-1,-1,1,-1},{-1,-1,0,-1}};
+
+
+//define pointers for pages
+
+
 
 
 void initCursor(){
@@ -15,19 +29,18 @@ pinMode(LEFT, INPUT_PULLUP);
 pinMode(RIGHT, INPUT_PULLUP);
 pinMode(DOWN, INPUT_PULLUP);
 pinMode(UP, INPUT_PULLUP);
-pinMode(ENTER, INPUT_PULLUP);
+pinMode(CENTER, INPUT_PULLUP);
 }
 
 void initLCD(){
   
 
-//define menus
-String menu[4]={VIEW,SEND,OPT,SOS};
-//options menu
-//char *options[2]={ADD,INFO};
+
+
 
 
 //init the lcd and display welcome screen----------------
+   
   
   Serial.begin(9600);
   
@@ -63,6 +76,39 @@ String menu[4]={VIEW,SEND,OPT,SOS};
 
   lcd.clear();
   lcd.setCursor(0,0);
-  lcd.print(menu[0]);
+  lcd.print(menus[0][0]);
+}
+void updateUI(int dir){
+  
+    if(dir==5){
+    col++;
+    if(col>menuSize[row]-1){
+      col=0;
+    }
+    lcd.setCursor(0,0);
+    lcd.print(menus[row][col]);
+    }
+    if(dir==2){
+    col--;
+    
+    if(col<0){
+      col=menuSize[row];
+      }
+      lcd.setCursor(0,0);
+      lcd.print(menus[row][col]);
+    }
+    if(dir==4){
+      row=menuArray[row][col];
+      col=0;
+      lcd.setCursor(0,0);
+      lcd.print(menus[row][col]);
+    }
+
+
+
+  
+  if(dir==4){
+    return;
+  }
 }
   
