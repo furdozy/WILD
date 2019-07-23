@@ -1,11 +1,11 @@
        #define LED RED_LED
 #define LED2 GREEN_LED
 
-#define DOWN P4_0
-#define RIGHT P4_1
-#define UP P4_2
-#define ENTER P4_3
-#define LEFT P4_4
+#define DOWN P4_2
+#define RIGHT P4_0
+#define UP P4_4
+#define ENTER P4_1
+#define LEFT P4_3
 
 //#include <EEPROM.h>
 
