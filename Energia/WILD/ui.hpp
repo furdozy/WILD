@@ -9,3 +9,5 @@ void initCursor();
 void initLCD();
 
 void updateUI(int dir);
+
+void doActions(int row, int col);

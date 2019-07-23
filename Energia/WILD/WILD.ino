@@ -24,23 +24,24 @@ void loop() {
   if(digitalRead(UP)==LOW){
     updateUI(1);
     while(digitalRead(UP)==LOW);
-  }
+  delay(50);}
     
   if(digitalRead(LEFT)==LOW){
     updateUI(2);
     while(digitalRead(LEFT)==LOW);
-  }
+  delay(50);}
   if(digitalRead(DOWN)==LOW){
     updateUI(3);
     while(digitalRead(DOWN)==LOW);
-  }
+  delay(50);}
   if(digitalRead(CENTER)==LOW){
     updateUI(4);
     while(digitalRead(CENTER)==LOW);
+    delay(50);
   }
   if(digitalRead(RIGHT)==LOW){
     updateUI(5);
     while(digitalRead(RIGHT)==LOW);
+    delay(50);
   }
-  delay(200);
 }

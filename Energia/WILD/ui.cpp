@@ -98,17 +98,17 @@ void updateUI(int dir){
       lcd.print(menus[row][col]);
     }
     if(dir==4){
+      doActions(row,col);
+      if(menuArray[row][col]==-1)return;
       row=menuArray[row][col];
       col=0;
       lcd.setCursor(0,0);
+      
       lcd.print(menus[row][col]);
     }
-
-
-
-  
-  if(dir==4){
-    return;
+}
+void doActions(int row,int col){
+  if(row==0&&col==1){
+    
   }
 }
-  
