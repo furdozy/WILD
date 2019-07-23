@@ -1,4 +1,4 @@
-#define LED RED_LED
+       #define LED RED_LED
 #define LED2 GREEN_LED
 
 #define DOWN P4_0
@@ -7,6 +7,7 @@
 #define ENTER P4_3
 #define LEFT P4_4
 
+//#include <EEPROM.h>
 
 void setup() {
 

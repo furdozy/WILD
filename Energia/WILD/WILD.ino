@@ -5,7 +5,7 @@
 #include "network.h"
 #include "pages.h"
 // initialize the library with the numbers of the interface pins
-LiquidCrystal lcd(P6_7, P2_3, P2_6, P2_4, P5_6, P6_6);
+LiquidCrystal lcd(P6_4, P6_2, P2_3, P2_4, P2_5, P2_6);
 int row=0;
 int col=0;
 
