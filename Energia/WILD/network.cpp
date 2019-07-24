@@ -1,19 +1,8 @@
 #include "Energia.h"
 #include "node.h"
-#include <string.h>
 
 
-
-
-
-
-int findNodes(){
-  
-  
-  
-}
-
-int send(String msg,struct node dest){
+void send(String msg,struct node dest){
   
   //string for hi 32 bits of address
   String dHi="AT DH "+dest.SH;
@@ -33,5 +22,4 @@ int send(String msg,struct node dest){
 
   Serial.print(msg);
 
-  return 1;//return statement for reading status if needed at a future date
-}
+ }

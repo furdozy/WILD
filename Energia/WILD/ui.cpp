@@ -3,7 +3,6 @@
 #include "custChars.h"
 #include <LiquidCrystal.h>
 #include "ui.hpp"
-#include "actions.h"
 
 
 LiquidCrystal lcd(P6_4, P6_2, P2_3, P2_4, P2_5, P2_6);
@@ -118,4 +117,10 @@ String getText(int maxSize){
   //while enter not pressed
   // -print chars by buttons
   //return all chars as string 
+}
+
+void doSend(){
+String message=getText(160);
+
+  
 }

@@ -2,7 +2,7 @@
 // include the library code:
 #include <LiquidCrystal.h>
 #include "ui.hpp"
-#include "network.h"
+#include "network.hpp"
 
 // initialize the library with the numbers of the interface pins
 
