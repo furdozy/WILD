@@ -3,4 +3,4 @@
 
 
 
-void send(String msg,struct node dest);
+void send(String msg);
