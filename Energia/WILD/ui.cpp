@@ -9,19 +9,24 @@
 String MSGS="You have n  messagesto read messages.   available, press OK                     ";
   //row          <     row 0        ><     row 2        ><     row 1        ><     row 3        >   
 
-LiquidCrystal lcd(P6_4, P6_2, P2_3, P2_4, P2_5, P2_6);
+LiquidCrystal lcd(P6_4, P6_2, P2_6, P2_5, P2_4, P2_3);
+
+//pinMode(P6_6, OUTPUT);
+//digitalWrite(P6_6, HIGH);
+
 int row=0;//menu expressed as a row
 int col=0;//item as col
 
-int menuSize[3]={4,3,1};
+int menuSize[2]={4,3};
 String dne="dne";
 //define menus
 
 //
-String menus[3][4]={{VIEW,SEND,OPT,SOS} 
+String menus[2][4]={{VIEW,SEND,OPT,SOS} 
                     ,{ADD,INFO,EXIT,  }
-                    ,{MSGS,,,         } };
-int menuArray[3][4]={{2,-1,1,-1},
+//                    ,{MSGS,,,         }
+                    };
+int menuArray[2][4]={{2,-1,1,-1},
                       {-1,-1,0,-1}};
 
 
@@ -134,5 +139,5 @@ Serial.print("Four score and seven years ago our fathers brought forth on this c
 }
 
 void updateMsg(int messages){
-  MSGS="You have "+messages+"  messagesto read messages.   available, press OK                     "
+//  MSGS="You have "+messages+"  messagesto read messages.   available, press OK                     "
 }
