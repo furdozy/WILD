@@ -14,7 +14,6 @@ String MSGS=    "New Messages:       Total messages:                            
 //messages ram tracking variables
 
 String messages[maxMsgs];
-int currentMsg=0;//change this to a flash address for persistence
 int newMsgs=0;//same with this
 int totalMsgs=0;//same
 
@@ -44,7 +43,7 @@ String dne="dne";
 
 //
 String menus[2][4]={{VIEW,SEND,OPT,SOS} 
-                    ,{ADD,INFO,EXIT,  }};
+                    ,{ADD,INFO,EXIT}};
 int menuArray[2][4]={{2,-1,1,-1},
                       {-1,-1,0,-1}};
 
@@ -206,11 +205,14 @@ void updateMsg(){
 }
 
 void getMsg(){
-  messages[currentMsg]=Serial.readString();
+  int i;
+  for(i=0;i<totalMsgs;i++){
+    messages[i+1]=messages[i];//push messages
+    }
+  messages[0]=Serial.readString();//add message to the top
   newMsgs++;
-  currentMsg=(currentMsg+1)%maxMsgs;
-  if(totalMsgs<10)totalMsgs++;
-  updateMsg();
+  if(totalMsgs<maxMsgs)totalMsgs++;
+  updateMsg();//fix message page
   }
 
 String getText(int maxSize){
