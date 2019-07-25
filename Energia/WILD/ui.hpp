@@ -16,4 +16,4 @@ String getText(int maxSize);
 
 void doSend();
 
-void updateMsg(int messages);
+void updateMsg(String msg);

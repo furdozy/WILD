@@ -5,14 +5,22 @@
 #include "ui.hpp"
 #include "network.hpp"
 
+
+String messages[10];
+
+int newMsgs=0;
+
+int totalMsgs=0;
+
+int currentMsg=0;
+
+
 //non static pages
 String MSGS="You have n  messagesto read messages.   available, press OK                     ";
   //row          <     row 0        ><     row 2        ><     row 1        ><     row 3        >   
 
 LiquidCrystal lcd(P6_4, P6_2, P2_6, P2_5, P2_4, P2_3);
 
-//pinMode(P6_6, OUTPUT);
-//digitalWrite(P6_6, HIGH);
 
 int row=0;//menu expressed as a row
 int col=0;//item as col
@@ -109,14 +117,17 @@ void updateUI(int dir){
       lcd.print(menus[row][col]);
     }
     if(dir==4){
+      if(menuArray[row][col]==-1){
+        
+      }else{
       doActions(row,col);
-      if(menuArray[row][col]==-1)return;
       row=menuArray[row][col];
       col=0;
       lcd.setCursor(0,0);
       
       lcd.print(menus[row][col]);
     }
+}
 }
 void doActions(int row,int col){
   if(row==0&&col==1){
@@ -138,6 +149,8 @@ Serial.print("Four score and seven years ago our fathers brought forth on this c
 
 }
 
-void updateMsg(int messages){
-//  MSGS="You have "+messages+"  messagesto read messages.   available, press OK                     "
+void updateMsg(String msg){
+  
+
+//  MSGS="You have "+messages+"  messagesto read messages.   available, press OK"
 }
