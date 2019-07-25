@@ -4,4 +4,4 @@
 
 void saveMessage(String message,int id);
 
-String readMessage(int id);
+String readMessage(int position);
