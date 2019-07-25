@@ -2,6 +2,6 @@
 
 
 
-void saveMessage(String message,int id);
+void saveMessage(String message);
 
-String readMessage(int id);
+String readMessage(int position);
