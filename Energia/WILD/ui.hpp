@@ -5,6 +5,7 @@
 #define LEFT P4_3
 #define maxMsgs 10
 
+
 void initCursor();
 
 void initLCD();
@@ -20,3 +21,5 @@ void doSend();
 void updateMsg(int messages);
 
 void getMsg();
+
+void initialize_kb();
