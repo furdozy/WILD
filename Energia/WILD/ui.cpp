@@ -5,6 +5,7 @@
 #include "ui.hpp"
 #include "network.hpp"
 #include <driverlib.h>
+#include "storage.h"
 
 //non static pages
 String MSGS=    "New Messages:       Total messages:                                             ";
@@ -216,22 +217,25 @@ void updateMsg(){//fix this
 }
 
 void getMsg(){
+  //populate messages with strings from memory
+
+  for(int i = 0; i < totalMsgs; i++)
+  {
+    //stores current array of messages as is in memory, overwritting previous version
+    messages[i] = readMessage(i+1);
+  }
+  
   int i;
   for(i=totalMsgs-2;i>=0;i--){
     messages[i]=messages[i+1];//push messages
-    menuArray[3][i+1]=-1;
     }
   messages[0]=Serial.readString();//add message to the top
   newMsgs++;
-  if(totalMsgs<maxMsgs){
-    totalMsgs++;
-    menuSize[3]=totalMsgs;
-  }
-  for(i=0;i<totalMsgs-1;i++){
-    menus[3][i]=messages[i];//update the pages
-  }
+  if(totalMsgs<maxMsgs)totalMsgs++;
   updateMsg();//fix message page
   }
+
+  
 void lcdPage(String page){
   char buf[80];
   page.toCharArray(buf,80);
