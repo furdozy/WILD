@@ -231,6 +231,7 @@ void getMsg(){
     }
   messages[0]=Serial.readString();//add message to the top
   newMsgs++;
+  saveMessage(messages[0]);
   if(totalMsgs<maxMsgs)totalMsgs++;
   updateMsg();//fix message page
   }
