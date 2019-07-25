@@ -34,7 +34,7 @@ const byte row4 = P3_3;
 const byte row7 = P3_7;
 
 
-LiquidCrystal lcd(P6_4, P6_2, P2_3, P2_4, P2_5, P2_6);
+LiquidCrystal lcd(P6_4, P6_2, P2_6, P2_5, P2_4, P2_3);
 int row=0;//menu expressed as a row
 int col=0;//item as col
 
@@ -239,7 +239,7 @@ void getMsg(){
   
 void lcdPage(String page){
   char buf[80];
-  page.toCharArray(buf,80);
+  page.toCharArray(buf,81);
   int colpos=0;
   int rowpos=0;
   for(int i = 0; i < page.length(); i++)
