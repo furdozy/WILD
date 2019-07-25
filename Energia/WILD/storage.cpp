@@ -9,6 +9,51 @@ uint32_t id2 = 0x21000; //sector 1
 int message_len;
 
 
+int getMessage_len ()
+{
+  MAP_FlashCtl_setWaitState(FLASH_BANK0, 2);
+  MAP_FlashCtl_setWaitState(FLASH_BANK1, 2);
+  
+  //fetch message_len
+  MAP_FlashCtl_unprotectSector(FLASH_MAIN_MEMORY_SPACE_BANK1, FLASH_SECTOR1);
+  char *ptr;
+  ptr = (char*) id2;
+  String message_len_id = "";
+  if(ptr[0] == 1)
+  {
+    //message_len in memory. retrieve
+    for(int i = 1; i <= 3; i++)
+    {
+      if(isDigit(ptr[i]))
+        message_len_id += ptr[i];
+    }
+    MAP_FlashCtl_protectSector(FLASH_MAIN_MEMORY_SPACE_BANK1, FLASH_SECTOR1);
+    message_len = message_len_id.toInt();
+    return 0;
+  }
+  else
+  {
+    //no message_len stored in memory
+    //write empty value to message_len_id in memory
+    //current message length in memory set to 0
+    //default message_len max size is 3 digits. Store 3 digits if possible. if not, full with "a" char
+    message_len_id = "1";
+    message_len_id += "0";
+    message_len_id += "a";
+    message_len_id += "a";
+    char message_len_idchar[4];
+    message_len_id.toCharArray(message_len_idchar, 4+1);
+    
+    MAP_FlashCtl_performMassErase();
+    MAP_FlashCtl_programMemory (message_len_idchar, (void*) id2, 4);
+    MAP_FlashCtl_protectSector(FLASH_MAIN_MEMORY_SPACE_BANK1, FLASH_SECTOR1);
+
+    message_len = 0;
+    return 0;
+  }
+}
+
+
 //code below using final variable names
 String readMessage(int position)
 {

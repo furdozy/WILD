@@ -8,7 +8,7 @@
 #include "storage.h"
 
 //non static pages
-String MSGS=    "New Messages:       Total messages:                                             ";
+String MSGS=    "New Messages:                           Total messages:                         ";
   //row          <     row 0        ><     row 2        ><     row 1        ><     row 3        >   
 
 
@@ -16,7 +16,7 @@ String MSGS=    "New Messages:       Total messages:                            
 
 String messages[maxMsgs];//update for flash
 int newMsgs=0;//same with this
-int totalMsgs=0;//same
+int totalMsgs= 0;//getMessage_len()/80);//same
 
 //initialize keyboard
 const byte col1 = P8_4;
@@ -30,7 +30,7 @@ const byte row2 = P8_3;
 //const byte row3 = P3_1;
 const byte row4 = P3_3;
 //const byte row5 = P3_4;
-//const byte row6 = P3_5;
+const byte row6 = P3_5;
 const byte row7 = P3_7;
 
 
@@ -45,7 +45,8 @@ String dne="dne";
 //
 String menus[4][maxMsgs]={{VIEW,SEND,OPT,SOS} 
                     ,{ADD,INFO,EXIT}
-                    ,{MSGS}};
+                    ,{MSGS}
+                    ,{"No messages                                                                     "} };
 
                     
 int menuArray[4][10]={{2,-1,1,-1},
@@ -104,7 +105,7 @@ void initLCD(){
   lcd.write((uint8_t)5);
   lcd.print("Wilderness Info");
 
-  delay(5000);
+  delay(500);
   lcd.clear();
 
   lcd.clear();
@@ -132,7 +133,7 @@ void initialize_kb()
 //  pinMode(row3, INPUT);
   pinMode(row4, INPUT);
 //  pinMode(row5, INPUT);
-//  pinMode(row6, INPUT);
+  pinMode(row6, INPUT);
   pinMode(row7, INPUT);
 
   digitalWrite(row1, HIGH); // set pullup
@@ -140,20 +141,20 @@ void initialize_kb()
 //  digitalWrite(row3, HIGH); // set pullup
   digitalWrite(row4, HIGH); // set pullup
 //  digitalWrite(row5, HIGH); // set pullup
-//  digitalWrite(row6, HIGH); // set pullup
+  digitalWrite(row6, HIGH); // set pullup
   digitalWrite(row7, HIGH); // set pullup
 
-  GPIO_setAsPeripheralModuleFunctionInputPin(
-       GPIO_PORT_P3,GPIO_PIN5,
-        GPIO_PRIMARY_MODULE_FUNCTION    );
+  //GPIO_setAsPeripheralModuleFunctionInputPin(
+  //     GPIO_PORT_P3,GPIO_PIN5,
+  //      GPIO_PRIMARY_MODULE_FUNCTION    );
   
   GPIO_setAsInputPin(GPIO_PORT_P3, GPIO_PIN1);
   GPIO_setAsInputPin(GPIO_PORT_P3, GPIO_PIN4);
-  GPIO_setAsInputPin(GPIO_PORT_P3, GPIO_PIN5);
+  //GPIO_setAsInputPin(GPIO_PORT_P3, GPIO_PIN5);
   
   GPIO_setAsInputPinWithPullUpResistor(GPIO_PORT_P3, GPIO_PIN1);
   GPIO_setAsInputPinWithPullUpResistor(GPIO_PORT_P3, GPIO_PIN4);
-  GPIO_setAsInputPinWithPullUpResistor(GPIO_PORT_P3, GPIO_PIN5);
+  //GPIO_setAsInputPinWithPullUpResistor(GPIO_PORT_P3, GPIO_PIN5);
 }
 
 
@@ -181,8 +182,10 @@ void updateUI(int dir){
     }
     //center button
     if(dir==4){
+      if(menuArray[row][col]==-1){
       doActions(row,col);
-      if(menuArray[row][col]==-1)return;
+        return;
+      }
       row=menuArray[row][col];
       col=0;
       lcd.setCursor(0,0);
@@ -205,20 +208,31 @@ void doActions(int row,int col){
 
 
 void doSend(){
-  Serial.print(getText(80));
-  Serial.print("Four score and seven years ago our fathers brought forth on this continent, a new nation, conceived in Liberty, and dedicated to the proposition that all men are created equal. Now we are engaged in a great civil war, testing whether that nation, or any nation so conceived and so dedicated, can long endure. We are met on a great battle-field of that war. We have come to dedicate a portion of that field, as a final resting place for those who here gave their lives that that nation might live. It is altogether fitting and proper that we should do this.But, in a larger sense, we can not dedicate -- we can not consecrate -- we can not hallow -- this ground. The brave men, living and dead, who struggled here, have consecrated it, far above our poor power to add or detract. The world will little note, nor long remember what we say here, but it can never forget what they did here. It is for us the living, rather, to be dedicated here to the unfinished work which they who fought here have thus far so nobly advanced. It is rather for us to be here dedicated to the great task remaining before us -- that from these honored dead we take increased devotion to that cause for which they gave the last full measure of devotion -- that we here highly resolve that these dead shall not have died in vain -- that this nation, under God, shall have a new birth of freedom -- and that government of the people, by the people, for the people, shall not perish from the earth.");
-
+  String msg=getText(80);
+  Serial.print(msg);
+  //Serial.print("Four score and seven years ago our fathers brought forth on this continent, a new nation, conceived in Liberty, and dedicated to the proposition that all men are created equal. Now we are engaged in a great civil war, testing whether that nation, or any nation so conceived and so dedicated, can long endure. We are met on a great battle-field of that war. We have come to dedicate a portion of that field, as a final resting place for those who here gave their lives that that nation might live. It is altogether fitting and proper that we should do this.But, in a larger sense, we can not dedicate -- we can not consecrate -- we can not hallow -- this ground. The brave men, living and dead, who struggled here, have consecrated it, far above our poor power to add or detract. The world will little note, nor long remember what we say here, but it can never forget what they did here. It is for us the living, rather, to be dedicated here to the unfinished work which they who fought here have thus far so nobly advanced. It is rather for us to be here dedicated to the great task remaining before us -- that from these honored dead we take increased devotion to that cause for which they gave the last full measure of devotion -- that we here highly resolve that these dead shall not have died in vain -- that this nation, under God, shall have a new birth of freedom -- and that government of the people, by the people, for the people, shall not perish from the earth.");
+  lcd.setCursor(0,0);
+  lcd.print("Sending Message");
+  
+  lcd.setCursor(0,1);
+  int e;
+  for(e=0;e<20;e++){
+  lcd.write("*");
+  delay(100);
+  }
+  row=0;
+  col=0;
+  lcdPage(menus[row][col]);
 }
 
 void updateMsg(){//fix this
-  String a="You have ";
-  String b=" messages to read messages.   available, press OK                     ";
-  MSGS=a.concat(((String)newMsgs).concat(b));
+  menus[2][0]=  "    New messages:   "+((String)newMsgs)+"                     Total Messages:   "+((String)totalMsgs)+"                 ";
+  //row          <     row 0        >                    <     row 2        ><     row 1        >                     <     row 3        >   
+
 }
 
 void getMsg(){
   //populate messages with strings from memory
-
   for(int i = 0; i < totalMsgs; i++)
   {
     //stores current array of messages as is in memory, overwritting previous version
@@ -227,9 +241,11 @@ void getMsg(){
   
   int i;
   for(i=totalMsgs-2;i>=0;i--){
-    messages[i]=messages[i+1];//push messages
+    messages[i+1]=messages[i];//push messages
+    menus[3][i+1]=messages[i+1];
     }
   messages[0]=Serial.readString();//add message to the top
+  menus[3][0]=messages[0];
   newMsgs++;
   saveMessage(messages[0]);
   if(totalMsgs<maxMsgs)totalMsgs++;
@@ -287,8 +303,8 @@ String getText(int maxSize){
   
   while(1)
   {
-    if(digitalRead(CENTER)==LOW)
-      cursorpress = 1;
+    //if(digitalRead(CENTER)==LOW)
+    //  cursorpress = 1;
     
     if(changedisplay == 1)
     {
@@ -341,8 +357,7 @@ String getText(int maxSize){
             (GPIO_getInputPinValue(GPIO_PORT_P3,GPIO_PIN4) == 0)
       {alt = 1;}             // alt modifier key - unimplemented
       if 
-      (GPIO_getInputPinValue(GPIO_PORT_P3,GPIO_PIN5) == 0)
-      {chr = ' '; symb=' ';}
+      (digitalRead(row6)==0){chr = ' '; symb=' ';}
       if (digitalRead(row7)==0) {chr = '~'; symb='0';}
       
       pinMode(col1, INPUT); 
@@ -360,8 +375,7 @@ String getText(int maxSize){
             (GPIO_getInputPinValue(GPIO_PORT_P3, GPIO_PIN4) == 0)
       {chr = 'X'; symb='8';}
       if 
-      (GPIO_getInputPinValue(GPIO_PORT_P3,GPIO_PIN5) == 0)
-      {chr = 'Z'; symb='7';}
+      (digitalRead(row6)==0){chr = 'Z'; symb='7';}
       if (digitalRead(row7)==0) {shift = 1; shl = 1;}  // shift modifier key
       
       pinMode(col2, INPUT); 
@@ -379,8 +393,7 @@ String getText(int maxSize){
             (GPIO_getInputPinValue(GPIO_PORT_P3, GPIO_PIN4) == 0)
       {chr = 'V'; symb='?';}
       if 
-      (GPIO_getInputPinValue(GPIO_PORT_P3,GPIO_PIN5) == 0)
-      {chr = 'C'; symb='9';}
+      (digitalRead(row6)==0){chr = 'C'; symb='9';}
       if (digitalRead(row7)==0) {chr = 'F'; symb='6';}
       
       pinMode(col3, INPUT); 
@@ -399,8 +412,7 @@ String getText(int maxSize){
             (GPIO_getInputPinValue(GPIO_PORT_P3, GPIO_PIN4) == 0)
       {chr = 'B'; symb='!';}
       if 
-      (GPIO_getInputPinValue(GPIO_PORT_P3,GPIO_PIN5) == 0)
-      {chr = 'N'; symb=',';}
+      (digitalRead(row6)==0){chr = 'N'; symb=',';}
       if (digitalRead(row7)==0) {chr = 'J'; symb=';';}
       
       pinMode(col4, INPUT); 
@@ -418,8 +430,7 @@ String getText(int maxSize){
             (GPIO_getInputPinValue(GPIO_PORT_P3, GPIO_PIN4) == 0)
       {chr = '$'; symb='`';}
       if 
-      (GPIO_getInputPinValue(GPIO_PORT_P3,GPIO_PIN5) == 0)
-      {chr = 'M'; symb='.';}
+      (digitalRead(row6)==0){chr = 'M'; symb='.';}
       if (digitalRead(row7)==0) {chr = 'K'; symb='\'';}
       
       pinMode(col5, INPUT); 
