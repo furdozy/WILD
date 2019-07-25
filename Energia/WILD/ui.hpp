@@ -3,6 +3,7 @@
 #define UP P4_4
 #define CENTER P4_1
 #define LEFT P4_3
+#define maxMsgs 10
 
 void initCursor();
 
@@ -16,4 +17,6 @@ String getText(int maxSize);
 
 void doSend();
 
-void updateMsg(String msg);
+void updateMsg(int messages);
+
+void getMsg();

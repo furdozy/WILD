@@ -8,19 +8,19 @@
 
 
 
-String message;
+
+
 
 void setup(){
-Serial.begin(9600);
+//Serial.begin(9600);
 initCursor();
 //display top menu option
 initLCD();
-digitalWrite(P6_3,LOW);
+
 }
 
 void loop() {
-
-  if(Serial.available()){
+  if(Serial.available()>0){
     getMsg();
   }
   
@@ -47,9 +47,4 @@ void loop() {
     while(digitalRead(RIGHT)==LOW);
     delay(50);
   }
-}
-
-void getMsg (){
-  message=Serial.readString();
-  updateMsg(message);
 }
