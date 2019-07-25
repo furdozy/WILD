@@ -13,7 +13,7 @@ String MSGS=    "New Messages:       Total messages:                            
 
 //messages ram tracking variables
 
-String messages[maxMsgs];
+String messages[maxMsgs];//update for flash
 int newMsgs=0;//same with this
 int totalMsgs=0;//same
 
@@ -37,17 +37,19 @@ LiquidCrystal lcd(P6_4, P6_2, P2_3, P2_4, P2_5, P2_6);
 int row=0;//menu expressed as a row
 int col=0;//item as col
 
-int menuSize[2]={4,3};
+int menuSize[4]={4,3,1,totalMsgs+1};
 String dne="dne";
 //define menus
 
 //
-String menus[4][10]={{VIEW,SEND,OPT,SOS} 
+String menus[4][maxMsgs]={{VIEW,SEND,OPT,SOS} 
                     ,{ADD,INFO,EXIT}
-                    ,{MSGS};
-int menuArray[2][4]={{2,-1,1,-1},
-                      {-1,-1,0,-1}};
+                    ,{MSGS}};
 
+                    
+int menuArray[4][10]={{2,-1,1,-1},
+                      {-1,-1,0,-1},
+                      {3}         };
 
 //define pointers for pages
 
@@ -106,7 +108,7 @@ void initLCD(){
 
   lcd.clear();
   lcd.setCursor(0,0);
-  lcd.print(menus[0][0]);
+  lcdPage(menus[0][0]);
 }
 
 void initialize_kb()
@@ -155,40 +157,48 @@ void initialize_kb()
 
 
 void updateUI(int dir){
-  
+
+    //right
     if(dir==5){
     col++;
     if(col>menuSize[row]-1){
       col=0;
     }
     lcd.setCursor(0,0);
-    lcd.print(menus[row][col]);
+    lcdPage(menus[row][col]);
     }
-    if(dir==2){
-    col--;
     
-    if(col<0){
-      col=menuSize[row];
-      }
+    //left
+    if(dir==2){
+      col--;
+    
+      if(col<0){
+        col=menuSize[row];
+        }
       lcd.setCursor(0,0);
-      lcd.print(menus[row][col]);
+      lcdPage(menus[row][col]);
     }
+    //center button
     if(dir==4){
       doActions(row,col);
       if(menuArray[row][col]==-1)return;
       row=menuArray[row][col];
       col=0;
       lcd.setCursor(0,0);
-      
-      lcd.print(menus[row][col]);
+      lcdPage(menus[row][col]);
+    }
+
+    //up arrow
+    if(dir==1){
+      row==0;
+      col==0;
+      lcd.setCursor(0,0);
+      lcdPage(menus[row][col]);
     }
 }
 void doActions(int row,int col){
   if(row==0&&col==1){//send message page
     doSend();
-  }
-  if(row==0&&col==0){//view message page
-    //doRead();
   }
 }
 
@@ -199,30 +209,47 @@ void doSend(){
 
 }
 
-void updateMsg(){
+void updateMsg(){//fix this
   String a="You have ";
   String b=" messages to read messages.   available, press OK                     ";
   MSGS=a.concat(((String)newMsgs).concat(b));
 }
 
 void getMsg(){
-  //populate messages with strings from memory
-
-  for(int i = 0; i < totalMsgs; i++)
-  {
-    //stores current array of messages as is in memory, overwritting previous version
-    messages[i] = readMessage(i+1);
-  }
-  
   int i;
   for(i=totalMsgs-2;i>=0;i--){
     messages[i]=messages[i+1];//push messages
+    menuArray[3][i+1]=-1;
     }
   messages[0]=Serial.readString();//add message to the top
   newMsgs++;
-  if(totalMsgs<maxMsgs)totalMsgs++;
+  if(totalMsgs<maxMsgs){
+    totalMsgs++;
+    menuSize[3]=totalMsgs;
+  }
+  for(i=0;i<totalMsgs-1;i++){
+    menus[3][i]=messages[i];//update the pages
+  }
   updateMsg();//fix message page
   }
+void lcdPage(String page){
+  char buf[80];
+  page.toCharArray(buf,80);
+  int colpos=0;
+  int rowpos=0;
+  for(int i = 0; i < page.length(); i++)
+      { 
+        rowpos = i/20;
+        lcd.setCursor(colpos, rowpos);
+        lcd.print(buf[i]);
+        colpos++;
+        if(colpos == 20)
+          colpos = 0;
+
+      }
+}
+
+
 
 String getText(int maxSize){
   //clear screen
