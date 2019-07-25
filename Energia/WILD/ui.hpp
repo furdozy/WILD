@@ -22,4 +22,6 @@ void updateMsg(int messages);
 
 void getMsg();
 
+void lcdPage(String page);
+
 void initialize_kb();
