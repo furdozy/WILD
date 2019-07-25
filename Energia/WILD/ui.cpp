@@ -42,8 +42,9 @@ String dne="dne";
 //define menus
 
 //
-String menus[2][4]={{VIEW,SEND,OPT,SOS} 
-                    ,{ADD,INFO,EXIT}};
+String menus[4][10]={{VIEW,SEND,OPT,SOS} 
+                    ,{ADD,INFO,EXIT}
+                    ,{MSGS};
 int menuArray[2][4]={{2,-1,1,-1},
                       {-1,-1,0,-1}};
 
@@ -206,8 +207,8 @@ void updateMsg(){
 
 void getMsg(){
   int i;
-  for(i=0;i<totalMsgs;i++){
-    messages[i+1]=messages[i];//push messages
+  for(i=totalMsgs-2;i>=0;i--){
+    messages[i]=messages[i+1];//push messages
     }
   messages[0]=Serial.readString();//add message to the top
   newMsgs++;
