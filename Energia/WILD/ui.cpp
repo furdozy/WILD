@@ -46,7 +46,7 @@ String dne="dne";
 String menus[4][maxMsgs]={{VIEW,SEND,OPT,SOS} 
                     ,{ADD,INFO,EXIT}
                     ,{MSGS}
-                    ,{"No messages                                                                     "} };
+                    ,{"                        No messages                                             "} };
                     
 
                     
@@ -236,7 +236,7 @@ void doSend(){
 }
 
 void updateMsg(){//fix this
-  menus[2][0]=  "    New messages:   "+((String)newMsgs)+"                     Total Messages:   "+((String)totalMsgs)+"                 ";
+  menus[2][0]=  "New messages:     "+((String)newMsgs)+"                     Total Messages:   "+((String)totalMsgs)+"                 ";
   //row          <     row 0        >                    <     row 2        ><     row 1        >                     <     row 3        >   
 
 }
@@ -291,6 +291,15 @@ String getText(int maxSize){
 while(digitalRead(CENTER)==LOW);
   lcd.clear();
 
+  //ui additon
+  lcd.setCursor(0, 0);
+  lcd.print("Please Begin Typing ");
+  lcd.setCursor(0, 2);
+  lcd.print("   Press Enter to");
+  lcd.setCursor(0, 3); 
+  lcd.print("      Continue");
+  delay(1500);
+
   char buf[maxSize];
   byte enter = 0;
   int full = 0;
@@ -299,7 +308,7 @@ while(digitalRead(CENTER)==LOW);
   byte shiftlock = 0; // set/unset by pressing shift and letting it go rather than using it as a modifier for another key
   byte shiftlockchanged = 0; // helper
   unsigned long t = 0; // keypad repetition interval //formally, 'time'
-  int changedisplay = 1;
+  int changedisplay = 0;
   int rowpos = 0;
   int colpos = 0;
   int cursorpress = 0;
