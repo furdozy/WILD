@@ -15,7 +15,7 @@ void setup(){
 //Serial.begin(9600);
 initCursor();
 //display top menu option
-initLCD();
+initUI();
 
 }
 

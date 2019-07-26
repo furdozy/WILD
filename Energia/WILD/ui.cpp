@@ -67,8 +67,17 @@ void initCursor(){
   pinMode(CENTER, INPUT_PULLUP);
 }
 
-void initLCD(){
-  
+void initUI(){
+ 
+  newMsgs=0;//same with this
+  totalMsgs= getMessage_len()/80;
+  for(int i = 0; i < totalMsgs; i++)
+  {
+    messages[i] = readMessage(i+1);
+    menus[3][i] = messages[i];
+  }
+  menuSize[3]=totalMsgs;
+  updateMsg();
 
 
 
@@ -250,6 +259,7 @@ void getMsg(){
   newMsgs++;
   saveMessage(messages[0]);
   if(totalMsgs<maxMsgs)totalMsgs++;
+  menuSize[3]=totalMsgs;
   updateMsg();//fix message page
   }
 
@@ -278,7 +288,7 @@ String getText(int maxSize){
   //while enter not pressed
   // -print chars by buttons
   //return all chars as string 
-
+while(digitalRead(CENTER)==LOW);
   lcd.clear();
 
   char buf[maxSize];
@@ -304,8 +314,8 @@ String getText(int maxSize){
   
   while(1)
   {
-    //if(digitalRead(CENTER)==LOW)
-    //  cursorpress = 1;
+    if(digitalRead(CENTER)==LOW)
+      cursorpress = 1;
     
     if(changedisplay == 1)
     {
@@ -330,6 +340,8 @@ String getText(int maxSize){
         String toSend = "";
         for(int i = 0; i < maxSize; i++)
           toSend += buf[i];
+
+        lcd.clear();
         return toSend;
       }
    

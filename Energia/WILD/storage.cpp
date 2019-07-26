@@ -19,7 +19,7 @@ int getMessage_len ()
   char *ptr;
   ptr = (char*) id2;
   String message_len_id = "";
-  if(ptr[0] == 1)
+  if(ptr[0] == '1')
   {
     //message_len in memory. retrieve
     for(int i = 1; i <= 3; i++)
@@ -29,7 +29,7 @@ int getMessage_len ()
     }
     MAP_FlashCtl_protectSector(FLASH_MAIN_MEMORY_SPACE_BANK1, FLASH_SECTOR1);
     message_len = message_len_id.toInt();
-    return 0;
+    return message_len;
   }
   else
   {
@@ -49,7 +49,7 @@ int getMessage_len ()
     MAP_FlashCtl_protectSector(FLASH_MAIN_MEMORY_SPACE_BANK1, FLASH_SECTOR1);
 
     message_len = 0;
-    return 0;
+    return message_len;
   }
 }
 
@@ -114,7 +114,7 @@ void saveMessage(String message)
   char *ptr;
   ptr = (char*) id2;
   String message_len_id = "";
-  if(ptr[0] == 1)
+  if(ptr[0] == '1')
   {
     //message_len in memory. retrieve
     for(int i = 1; i <= 3; i++)

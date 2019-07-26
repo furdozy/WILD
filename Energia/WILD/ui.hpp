@@ -8,7 +8,7 @@
 
 void initCursor();
 
-void initLCD();
+void initUI();
 
 void updateUI(int dir);
 
@@ -18,7 +18,7 @@ String getText(int maxSize);
 
 void doSend();
 
-void updateMsg(int messages);
+void updateMsg();
 
 void getMsg();
 
