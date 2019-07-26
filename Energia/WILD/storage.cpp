@@ -42,7 +42,7 @@ int getMessage_len ()
     message_len_id += "a";
     message_len_id += "a";
     char message_len_idchar[4];
-    message_len_id.toCharArray(message_len_idchar, 4+1);
+    message_len_id.toCharArray(message_len_idchar, 4);
     
     MAP_FlashCtl_performMassErase();
     MAP_FlashCtl_programMemory (message_len_idchar, (void*) id2, 4);
@@ -135,7 +135,7 @@ void saveMessage(String message)
     message_len_id += "a";
     message_len_id += "a";
     char message_len_idchar[4];
-    message_len_id.toCharArray(message_len_idchar, 4+1);
+    message_len_id.toCharArray(message_len_idchar, 4);
     
     MAP_FlashCtl_performMassErase();
     MAP_FlashCtl_programMemory (message_len_idchar, (void*) id2, 4);

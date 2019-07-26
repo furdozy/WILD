@@ -16,7 +16,7 @@ String MSGS=    "New Messages:                           Total messages:        
 
 String messages[maxMsgs];//update for flash
 int newMsgs=0;//same with this
-int totalMsgs= 0;//getMessage_len()/80);//same
+int totalMsgs= getMessage_len()/80;//same
 
 //initialize keyboard
 const byte col1 = P8_4;
@@ -47,6 +47,7 @@ String menus[4][maxMsgs]={{VIEW,SEND,OPT,SOS}
                     ,{ADD,INFO,EXIT}
                     ,{MSGS}
                     ,{"No messages                                                                     "} };
+                    
 
                     
 int menuArray[4][10]={{2,-1,1,-1},
