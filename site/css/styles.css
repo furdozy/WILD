@@ -57,6 +57,10 @@ h2 a:hover {
   background-position: center;
 }
 
+.sponsers {
+  font-size: 17px;
+}
+
 .homecard {
   height: 50vh;
 	background-size: cover;
@@ -118,13 +122,13 @@ h2 a:hover {
 
 .card {
   margin: 20px;
-  padding-top: 60px;
+  padding-top: 40px;
   width: 300px;
-  height: 150px;
+  height: 200px;
   background-color: #D2EAE8;
   color: #505050;
   display: inline-block;
-  border-radius: 5px;
+  border-radius: 20px;
   vertical-align: top;
   overflow: hidden;
   font-family: 'Exo 2', sans-serif;
